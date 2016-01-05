@@ -1,1 +1,1 @@
-A website supported by sinatra
+A website developed by sinatra
