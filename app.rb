@@ -1,9 +1,9 @@
 # require 'rubygem'
 require 'bundler/setup'
-# require 'slim'
 require 'sinatra'
+require 'slim'
 require 'pry'
-# require 'pry'
+require 'pry'
 require 'hiredis'
 require 'redis'
 
@@ -19,5 +19,5 @@ end
 get '/' do
   # binding.pry
   @content = $redis.get('b')
-  erb :index
+  slim :index
 end

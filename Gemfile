@@ -5,4 +5,3 @@ gem 'hiredis'
 gem 'pry'
 
 gem 'slim'
-gem 'sinatra-bootstrap', :require => 'sinatra/bootstrap'
