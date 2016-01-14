@@ -1,3 +1,11 @@
 body {
 	padding-top: 70px;
 }
+
+.container {
+	width: 980px;
+}
+
+.home-content {
+	margin-top: 40px;
+}

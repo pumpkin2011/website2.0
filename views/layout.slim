@@ -1,6 +1,28 @@
 doctype html
 html
   head
-    title Sinatra With Slim
+    meta charset="utf-8"
+    meta content="IE=edge" http-equiv="X-UA-Compatible"
+    meta content="width=device-width, initial-scale=1" name="viewport"
+    link rel="icon" href="../../favicon.ico"
+
+    title lab
+    link rel="stylesheet" type='text/css' href="/bootstrap/css/bootstrap.css"
+    link rel="stylesheet" type='text/css' href="/assets/style.css"
+    script src="/bootstrap/js/jquery.min.js"
+    script src="/bootstrap/js/bootstrap.min.js"
   body
-    == yield
+		nav.navbar.navbar-default.navbar-fixed-top
+			.container
+				.navbar-header
+					a.navbar-brand href="#"  Project name
+				#navbar.collapse.navbar-collapse
+					ul.nav.navbar-nav
+						li class = nav('/')
+							a href="/"  Home
+						li class = nav('members')
+							a href="/members" Members
+						li
+							a href="#contact"  Contact
+		.container
+			== yield
