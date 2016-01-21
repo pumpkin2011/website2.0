@@ -2,12 +2,13 @@ form.form-horizontal method="post"
 	.form-group
 		label.col-sm-2.control-label for="home_image" image llnk 
 		.col-sm-10
-			input.form-control name="image_url"	
+			input.form-control name="image_url" value=@home['image_url']	
 
 	.form-group
 		label.col-sm-2.control-label for="home_ntrod" introduction 
 		.col-sm-10
-			textarea.form-control name="intro"	
+			textarea.form-control name="intro" rows="8"	
+				= @home['intro']
 
 	.form-group
 		.col-sm-offset-2.col-sm-10

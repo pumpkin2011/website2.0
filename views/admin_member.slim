@@ -1,0 +1,21 @@
+form.form-horizontal method="post"
+	.form-group
+		label.col-sm-2.control-label for="member_image" image llnk 
+		.col-sm-10
+			input.form-control name="member_image" value=@member['image_url']	
+
+	.form-group
+		label.col-sm-2.control-label for="name" name 
+		.col-sm-10
+			input.form-control name="member_name" value=@member['name']
+
+	.form-group
+		label.col-sm-2.control-label for="member_intro" introduction 
+		.col-sm-10
+			textarea.form-control name="member_intro"
+				= @member['intro']
+
+	.form-group
+		.col-sm-offset-2.col-sm-10
+			button.btn.btn-default type="submit" submit
+			a.btn.btn-default href="/admin/members" back

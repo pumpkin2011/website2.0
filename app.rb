@@ -13,52 +13,79 @@ end
 
 before do
   setup_redis
+
+	# set @members before visiting members
+	if request.path =~ /members/ then
+		@members = []
+		$redis.zrange("members:ids", 0, -1, withscores: true).map(&:first).each do|id|
+			@members << $redis.hgetall("member:#{id}")	
+		end
+	end
 end
 
+# front
 get '/' do
 	@home = $redis.hgetall('home')
-  slim :index
+  slim :index, layout: :layout_front
 end
 
 get '/members' do
-	binding.pry
-	slim :members
+	slim :members, layout: :layout_front
 end
 
 # admin
 # index
 get '/admin/home' do
-	slim :admin_home, layout: :layout_admin
+	@home = $redis.hgetall("home")
+	slim :admin_home
 end
 
 post '/admin/home' do
 	$redis.hmset("home",
 							 "image_url", params[:image_url], 
 							 "intro", params[:intro])
-	slim :admin_home, layout: :layout_admin
+	redirect('/admin/home')
 end
 
 # ---------------
 
 # members
 get '/admin/members' do
-	slim :admin_members, layout: :layout_admin
+	slim :admin_members
 end
 
 post '/admin/members' do
-	id = $redis.incr("members.count")
+	members = $redis.zrange("members:ids", 0, -1, withscores: true) 
+	id   = (members.map(&:first).max || 1).to_i + 1 
+	sort = (members.map(&:last).max || 1).to_i + 1
+	$redis.zadd("members:ids", sort, id)
 	$redis.hmset("member:#{id}",
 							 "id", id,
 							 "image_url", params[:member_image],
 							 "name", params[:member_name],
-							 "gender", params[:member_gender],
 							 "intro", params[:member_intro])
-	slim :admin_members, layout: :layout_admin
+	slim :admin_members
+end
+
+get '/admin/member/new' do
+	@member = {}
+	slim :admin_member
+end
+
+get '/admin/member/edit/:id' do
+	@member = $redis.hgetall("member:#{params[:id]}")	
+	slim :admin_member
+end
+
+get '/admin/member/delete/:id' do 
+	$redis.del("members:#{params[:id]}")
+	$redis.zrem("members:ids", params[:id])
+	redirect('/members')
 end
 
 # helpers
 helpers do
 	def nav(str=nil)
-		request.path =~ /#{str||'index'}/ ? 'active' : '' 
+		request.path.start_with?(str) ? 'active' : '' 
 	end
 end
