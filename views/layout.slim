@@ -32,18 +32,16 @@ html
 					      a href="#"  Profile
 					    li
 					      a href="#"  Help
-					  form.navbar-form.navbar-right
-					    input.form-control placeholder="Search..." type="text" /
 
 	  	.container-fluid
 	      .row
 					.col-sm-3.col-md-2.sidebar
 						ul.nav.nav-sidebar
-							li.active
+							li class=nav("home")
 								a href="/admin/home"
 									| home 
 									span.sr-only (current)
-							li
+							li class=nav("members")
 								a href="/admin/members" members 
 							li
 								a href="#"  Analytics

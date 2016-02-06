@@ -1,14 +1,23 @@
-- @members.each do |member|
 	.media
-		.media-left.media-middle
-			a href="/admin/member/edit/#{member['id']}" 
-				img.media-object.img-rounded alt="click to edit" src=member['image_url'] 
+		.media-head
+			a.btn.btn-primary href="/admin/member/new"
+				| new
 		.media-body
-			p = member['id']
-			p	= member['name']
-			p = member['intro']
-
-		.media-body
-			a.btn.btn-danger href="/admin/member/delete/#{member["id"]}" 
-				| delete
-	hr
+			table.table
+				thead
+					tr
+						th id
+						th name
+						th introduction
+						th
+				tbody
+					- @members.each do |member|
+						tr
+							td = member['id']
+							td 
+								a href="/admin/member/edit/#{member['id']}"
+									= member['name']
+							td == member['intro']
+							td
+								a.btn.btn-danger href="/admin/member/delete/#{member["id"]}" 
+									| delete
