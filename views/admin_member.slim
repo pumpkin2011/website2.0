@@ -12,7 +12,11 @@ form.form-horizontal action="/admin/member" method="post"
 
 	.media
 		.media-left
-			img#upload.media-object src="#{@member['image_url']}-profile" width="200" height="200" alt="profile"
+			- if @member['image_url']
+				img#upload.media-object src="#{@member['image_url']}-profile" width="200" height="200" alt="profile"
+			- else
+				img#upload.media-object src="/images/profile1.jpg" width="200" height="200" alt="profile"
+
 		.media-body
 			.form-group
 				.col-sm-9

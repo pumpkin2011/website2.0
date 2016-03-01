@@ -41,12 +41,10 @@ html
 								a href="/admin/home"
 									| home 
 									span.sr-only (current)
-							li class=nav("members")
+							li class=nav("member")
 								a href="/admin/members" members 
-							li
-								a href="#"  Analytics
-							li
-								a href="#"  Export
+							li class=nav('paper')
+								a href="/admin/papers" Papers 
 
       	.col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
 					== yield

@@ -1,0 +1,12 @@
+form action="/admin/paper" method="post"
+	.form-group
+		label for="" date 
+		input.form-control name="paper_date" value=@paper['date'] placeholder="date"
+	.form-group
+		label for="" content 
+		textarea.form-control name="paper_content" placeholder="content" 
+			=@paper['content']
+	.form-group
+		button.btn.btn-default type="submit" Submit
+		a.btn.btn-warning href="/admin/papers" back 
+
