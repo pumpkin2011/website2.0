@@ -23,7 +23,7 @@ before do
 	# set @members before visiting members
 	if request.path =~ /members/ then
 		@members = []
-		$redis.zrange("members:ids", 0, -1, withscores: true).map(&:first).each do|id|
+		$redis.zrange("member:ids", 0, -1, withscores: true).map(&:first).each do|id|
 			@members << $redis.hgetall("member:#{id}")
 		end
 	end
@@ -93,7 +93,7 @@ post '/admin/member' do
 	members = $redis.zrange("member:ids", 0, -1, withscores: true)
 	id   = (members.map(&:first).max || 0).to_i + 1
 	sort = (members.map(&:last).max || 0).to_i + 1
-	$redis.zadd("members:ids", sort, id)
+	$redis.zadd("member:ids", sort, id)
 	$redis.hmset("member:#{id}",
 							 "id", id,
 							 "image_url", params[:member_image],
@@ -118,7 +118,7 @@ end
 
 get '/admin/member/delete/:id' do
 	$redis.del("member:#{params[:id]}")
-	$redis.zrem("members:ids", params[:id])
+	$redis.zrem("member:ids", params[:id])
 	redirect('/admin/members')
 end
 
