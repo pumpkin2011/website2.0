@@ -20,21 +20,21 @@ form.form-horizontal action="/admin/member" method="post"
 		.media-body
 			.form-group
 				.col-sm-9
-					input.form-control name="member_id" value=@member['id'] readonly="readonly" placeholder="id"
+					input.form-control name="id" value=@member['id'] readonly="readonly" placeholder="id"
 
 			.form-group
 				.col-sm-9
-					input#image_text.form-control name="member_image" value=@member['image_url'] placeholder="image_url"
+					input#image_text.form-control name="image_url" value=@member['image_url'] placeholder="image_url"
 
 			.form-group
 				.col-sm-9
-					input.form-control name="member_name" value=@member['name'] placeholder="name"
+					input.form-control name="name" value=@member['name'] placeholder="name"
 
 	.media
 		.media-body
 			.form-group
 				.col-sm-10
-					textarea#editor.form-control name="member_intro"
+					textarea#editor.form-control name="intro"
 						= @member['intro']
 
 	.form-group
