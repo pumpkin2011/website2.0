@@ -1,4 +1,4 @@
-# require 'rubygem'
+# require 'rubygems'
 require 'bundler/setup'
 require 'sinatra'
 require 'slim'
@@ -9,17 +9,17 @@ require 'qiniu'
 require 'json'
 
 def setup_redis
-  # uri = URI.parse('redis://127.0.0.1:6379') #10000
-  $redis = Redis.new(:host => 'localhost', :port => 6379, driver: :hiredis) unless $redis
+	# uri = URI.parse('redis://127.0.0.1:6379') #10000
+	$redis = Redis.new(:host => 'localhost', :port => 6379, driver: :hiredis) unless $redis
 end
 
 before do
-  setup_redis
+	setup_redis
 
 	#qiniu
 	Qiniu.establish_connection! :access_key => 'lodTWhr36v_H1tx_YKNuCq1kgn2JluMGsx5iytzd',
-															:secret_key => 'FmLqr6BK9x_-Y3ktPgdD1Ve8ng9PCnOvBnc752Et'
-	
+		:secret_key => 'FmLqr6BK9x_-Y3ktPgdD1Ve8ng9PCnOvBnc752Et'
+
 	# set @members and @papers before visiting index 
 	%w(member paper).each do |name|
 		plural_name = name + 's'
@@ -60,7 +60,7 @@ end
 # front
 get '/' do
 	@home = $redis.hgetall('home')
-  slim :index, layout: :layout_front
+	slim :index, layout: :layout_front
 end
 
 get '/members' do
@@ -160,27 +160,27 @@ end
 # --------------------
 
 private
-	# create a new record
-	def create_or_update_record(name, arr)
-		plural_name = "#{name}s"
-		ids  = $redis.zrange("#{name}:ids", 0, -1, withscores: true)
-		if params[:id].empty? then
-			id   = (ids.map(&:first).max || 0).to_i + 1
-			sort = (ids.map(&:last).max || 0).to_i + 1
-			$redis.zadd("#{name}:ids", sort, id)
-		end
-		values = arr.map{ |item| params[item.to_sym] }
-		data = arr.zip(values).to_h
-		data["id"] = Integer(params[:id]) rescue id
-		$redis.hmset(plural_name, "#{name}:#{data['id']}", data)
-		redirect("/admin/#{plural_name}")
+# create a new record
+def create_or_update_record(name, arr)
+	plural_name = "#{name}s"
+	ids  = $redis.zrange("#{name}:ids", 0, -1, withscores: true)
+	if params[:id].empty? then
+		id   = (ids.map(&:first).max || 0).to_i + 1
+		sort = (ids.map(&:last).max || 0).to_i + 1
+		$redis.zadd("#{name}:ids", sort, id)
 	end
+	values = arr.map{ |item| params[item.to_sym] }
+	data = arr.zip(values).to_h
+	data["id"] = Integer(params[:id]) rescue id
+	$redis.hmset(plural_name, "#{name}:#{data['id']}", data)
+	redirect("/admin/#{plural_name}")
+end
 
-	# delete a record
-	def delete_record(name, id)
-		plural_name = "#{name}s"
-		$redis.hdel(plural_name, "#{name}:#{id}")
-		$redis.zrem("#{name}:ids", id)
-		redirect("/admin/#{plural_name}")
-	end
+# delete a record
+def delete_record(name, id)
+	plural_name = "#{name}s"
+	$redis.hdel(plural_name, "#{name}:#{id}")
+	$redis.zrem("#{name}:ids", id)
+	redirect("/admin/#{plural_name}")
+end
 

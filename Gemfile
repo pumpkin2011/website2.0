@@ -7,3 +7,4 @@ gem 'pry'
 
 gem 'slim'
 gem 'qiniu'
+gem 'unicorn'

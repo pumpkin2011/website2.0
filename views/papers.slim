@@ -1,6 +1,4 @@
-- @papers.each do |paper|
-	.media
-		.media-body
-			h4.media-heading 
-				= paper["content"]
-	hr
+ol
+	- @papers.each do |paper|
+		li = paper["content"]
+		hr
