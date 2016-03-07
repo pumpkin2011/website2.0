@@ -8,10 +8,6 @@ require 'redis'
 require 'qiniu'
 require 'json'
 
-def setup_redis
-	# uri = URI.parse('redis://127.0.0.1:6379') #10000
-	$redis = Redis.new(:host => 'localhost', :port => 6379, driver: :hiredis) unless $redis
-end
 
 before do
 	setup_redis
@@ -101,7 +97,6 @@ get '/admin/member/new' do
 	slim :admin_member
 end
 
-
 post '/admin/member' do
 	create_or_update_record('member', %w(id image_url name intro))
 end
@@ -160,19 +155,31 @@ end
 # --------------------
 
 private
-# create a new record
+
+def setup_redis
+	# uri = URI.parse('redis://127.0.0.1:6379') #10000
+	$redis = Redis.new(:host => 'localhost', :port => 6379, driver: :hiredis) unless $redis
+end
+
+# create or update a record
 def create_or_update_record(name, arr)
 	plural_name = "#{name}s"
 	ids  = $redis.zrange("#{name}:ids", 0, -1, withscores: true)
 	if params[:id].empty? then
 		id   = (ids.map(&:first).max || 0).to_i + 1
 		sort = (ids.map(&:last).max || 0).to_i + 1
-		$redis.zadd("#{name}:ids", sort, id)
 	end
 	values = arr.map{ |item| params[item.to_sym] }
 	data = arr.zip(values).to_h
 	data["id"] = Integer(params[:id]) rescue id
-	$redis.hmset(plural_name, "#{name}:#{data['id']}", data)
+	begin
+		$redis.zadd("#{name}:ids", sort, id) if params[:id].empty?
+		$redis.hmset(plural_name, "#{name}:#{data['id']}", data)
+	rescue
+		logger.info "set data error"
+		$redis.zrem("#{name}:ids", id) if params[:id].empty?
+		$redis.hdel(plural_name, "#{name}:#{data['id']}")
+	end
 	redirect("/admin/#{plural_name}")
 end
 
