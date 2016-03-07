@@ -169,8 +169,12 @@ def create_or_update_record(name, arr)
 		sort = (ids.map(&:last).max || 0).to_i + 1
 		$redis.zadd("#{name}:ids", sort, id)
 	end
-	values = arr.map{ |item| params[item.to_sym] }
-	data = arr.zip(values).to_h
+	data = {}
+	arr.each do |item|
+		data[item] = params[item.to_sym]	
+	end
+#	values = arr.map{ |item| params[item.to_sym] }
+#	data = arr.zip(values).to_h
 	data["id"] = Integer(params[:id]) rescue id
 	$redis.hmset(plural_name, "#{name}:#{data['id']}", data)
 	redirect("/admin/#{plural_name}")

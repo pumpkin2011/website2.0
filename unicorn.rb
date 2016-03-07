@@ -1,4 +1,4 @@
-@dir = "/Users/lee/Documents/sinatra/website2.0/"
+@dir = "/var/www/website2.0/"
 
 worker_processes 2
 working_directory @dir
