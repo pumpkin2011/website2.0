@@ -4,7 +4,7 @@ gem 'json'
 gem 'redis'
 gem 'hiredis'
 gem 'pry'
-
 gem 'slim'
 gem 'qiniu'
 gem 'unicorn'
+gem 'activesupport'

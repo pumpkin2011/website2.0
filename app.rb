@@ -1,4 +1,4 @@
-# require 'rubygems'
+require 'rubygems'
 require 'bundler/setup'
 require 'sinatra'
 require 'slim'
@@ -7,43 +7,17 @@ require 'hiredis'
 require 'redis'
 require 'qiniu'
 require 'json'
+require 'active_support/inflector'
+require './env.rb' if File.exists?('env.rb')
 
 
 before do
 	setup_redis
 
-	#qiniu
-	Qiniu.establish_connection! :access_key => 'lodTWhr36v_H1tx_YKNuCq1kgn2JluMGsx5iytzd',
-		:secret_key => 'FmLqr6BK9x_-Y3ktPgdD1Ve8ng9PCnOvBnc752Et'
+	setup_qiniu
 
-	# set @members and @papers before visiting index 
-	%w(member paper).each do |name|
-		plural_name = name + 's'
-		if request.path.include?(plural_name) then
-			instance_name = "@#{plural_name}"
-			ids = $redis.zrange("#{name}:ids", 0, -1, withscores: true).map(&:first)
-			values = $redis.hgetall(plural_name).values.map!{|item| eval item }
-			values = values.sort_by { |a| ids.index(a[:id].to_s) }
-			instance_variable_set(instance_name, values) 
-		end
-	end
-
-=begin
-	if request.path =~ /members/ then
-		@members = []
-		$redis.zrange("member:ids", 0, -1, withscores: true).map(&:first).each do|id|
-			@members << $redis.hgetall("member:#{id}")
-		end
-	end
-
-	# set @papers before visiting
-	if request.path =~ /papers/ then
-		@papers = []
-		$redis.zrange("paper:ids", 0, -1, withscores: true).map(&:first).each do |id|
-			@papers << $redis.hgetall("paper:#{id}")
-		end
-	end
-=end
+	# set @members and @papers
+	set_data %w(member paper) unless request.path.slice(/members|papers/).nil?
 end
 
 # qiniu uptoken
@@ -52,6 +26,12 @@ get '/qiniu/token' do
 	uptoken = Qiniu::Auth.generate_uptoken(put_policy)
 	{"uptoken" => uptoken}.to_json
 end
+
+# login
+get '/login' do
+	slim :login, layout: :layout_front
+end
+
 
 # front
 get '/' do
@@ -161,9 +141,24 @@ def setup_redis
 	$redis = Redis.new(:host => 'localhost', :port => 6379, driver: :hiredis) unless $redis
 end
 
+def setup_qiniu
+	Qiniu.establish_connection! :access_key => ENV['qiniu_access_key'],
+															:secret_key => ENV['qiniu_secret_key']
+end
+
+def set_data(params)
+	params.each do |name|
+		plural_name = name.pluralize
+		instance_name = "@#{plural_name}"
+		ids = $redis.zrange("#{name}:ids", 0, -1, withscores: true).map(&:first)
+		values = $redis.hgetall(plural_name).values.map!{|item| eval item }.sort_by { |a| ids.index(a[:id].to_s) }
+		instance_variable_set(instance_name, values) 
+	end
+end
+
 # create or update a record
 def create_or_update_record(name, arr)
-	plural_name = "#{name}s"
+	plural_name = name.pluralize
 	ids  = $redis.zrange("#{name}:ids", 0, -1, withscores: true)
 	if params[:id].empty? then
 		id   = (ids.map(&:first).max || 0).to_i + 1
@@ -176,7 +171,7 @@ def create_or_update_record(name, arr)
 		$redis.zadd("#{name}:ids", sort, id) if params[:id].empty?
 		$redis.hmset(plural_name, "#{name}:#{data['id']}", data)
 	rescue
-		logger.info "set data error"
+		logger.info "store data error"
 		$redis.zrem("#{name}:ids", id) if params[:id].empty?
 		$redis.hdel(plural_name, "#{name}:#{data['id']}")
 	end
@@ -185,7 +180,7 @@ end
 
 # delete a record
 def delete_record(name, id)
-	plural_name = "#{name}s"
+	plural_name = name.pluralize
 	$redis.hdel(plural_name, "#{name}:#{id}")
 	$redis.zrem("#{name}:ids", id)
 	redirect("/admin/#{plural_name}")
