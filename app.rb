@@ -2,14 +2,17 @@ require 'rubygems'
 require 'bundler/setup'
 require 'sinatra'
 require 'slim'
-require 'pry'
 require 'hiredis'
 require 'redis'
 require 'qiniu'
 require 'json'
 require 'active_support/inflector'
 require 'bcrypt'
-require './env.rb' if File.exists?('env.rb')
+
+if development?
+	require 'pry'
+	require './env.rb' if File.exists?('env.rb')
+end
 
 enable :sessions
 
@@ -175,10 +178,10 @@ def auth(param)
 end
 
 def set_data(name)
-	plural_name = name.pluralize
-	instance_name = "@#{plural_name}"
-	ids = $redis.zrange("#{name}:ids", 0, -1, withscores: true).map(&:first)
-	values = $redis.hgetall(plural_name).values.map!{|item| eval item }.sort_by { |a| ids.index(a[:id].to_s) }
+	singular_name = name.singularize
+	instance_name = "@#{name}"
+	ids = $redis.zrange("#{singular_name}:ids", 0, -1, withscores: true).map(&:first)
+	values = $redis.hgetall(name).values.map!{|item| eval item }.sort_by { |a| ids.index(a[:id].to_s) }
 	instance_variable_set(instance_name, values) 
 end
 
