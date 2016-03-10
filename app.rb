@@ -8,11 +8,15 @@ require 'redis'
 require 'qiniu'
 require 'json'
 require 'active_support/inflector'
+require 'bcrypt'
 require './env.rb' if File.exists?('env.rb')
 
+enable :sessions
 
 before do
 	setup_redis
+
+	before_login
 
 	setup_qiniu
 
@@ -30,6 +34,15 @@ end
 # login
 get '/login' do
 	slim :login, layout: :layout_front
+end
+
+post '/login' do
+	admin = $redis.hgetall('admin')	
+	if admin['username'] == params[:username] &&
+		 admin['password'] == BCrypt::Engine.hash_secret(params[:password], admin['salt'])
+		session[:admin] = params[:username]
+		redirect('/admin/home')
+	end
 end
 
 
@@ -130,6 +143,10 @@ helpers do
 	def nav(str=nil)
 		request.path =~ /#{str}/ ? 'active' : ''
 	end
+
+	def admin_name
+		return session[:admin]
+	end
 end
 
 # --------------------
@@ -144,6 +161,16 @@ end
 def setup_qiniu
 	Qiniu.establish_connection! :access_key => ENV['qiniu_access_key'],
 															:secret_key => ENV['qiniu_secret_key']
+end
+
+def before_login
+	if request.path=~/admin/ && admin_name.nil? then
+		redirect('/login')
+	end
+end
+
+def auth(param)
+	admin = $redis.getall()
 end
 
 def set_data(params)
@@ -164,8 +191,12 @@ def create_or_update_record(name, arr)
 		id   = (ids.map(&:first).max || 0).to_i + 1
 		sort = (ids.map(&:last).max || 0).to_i + 1
 	end
-	values = arr.map{ |item| params[item.to_sym] }
-	data = arr.zip(values).to_h
+	data = {}
+	arr.each do |item|
+		data[item] = params[item.to_sym]	
+	end
+	# values = arr.map{ |item| params[item.to_sym] }
+	# data = arr.zip(values).to_h
 	data["id"] = Integer(params[:id]) rescue id
 	begin
 		$redis.zadd("#{name}:ids", sort, id) if params[:id].empty?
