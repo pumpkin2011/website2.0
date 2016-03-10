@@ -20,8 +20,9 @@ before do
 
 	setup_qiniu
 
-	# set @members and @papers
-	set_data %w(member paper) unless request.path.slice(/members|papers/).nil?
+	# set @members or @papers
+	name = request.path.slice(/members|papers/)
+	set_data(name) if name  
 end
 
 # qiniu uptoken
@@ -173,14 +174,12 @@ def auth(param)
 	admin = $redis.getall()
 end
 
-def set_data(params)
-	params.each do |name|
-		plural_name = name.pluralize
-		instance_name = "@#{plural_name}"
-		ids = $redis.zrange("#{name}:ids", 0, -1, withscores: true).map(&:first)
-		values = $redis.hgetall(plural_name).values.map!{|item| eval item }.sort_by { |a| ids.index(a[:id].to_s) }
-		instance_variable_set(instance_name, values) 
-	end
+def set_data(name)
+	plural_name = name.pluralize
+	instance_name = "@#{plural_name}"
+	ids = $redis.zrange("#{name}:ids", 0, -1, withscores: true).map(&:first)
+	values = $redis.hgetall(plural_name).values.map!{|item| eval item }.sort_by { |a| ids.index(a[:id].to_s) }
+	instance_variable_set(instance_name, values) 
 end
 
 # create or update a record
