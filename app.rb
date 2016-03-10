@@ -192,7 +192,7 @@ def create_or_update_record(name, arr)
 	end
 	data = {}
 	arr.each do |item|
-		data[item] = params[item.to_sym]	
+		data[item] = params[item]	
 	end
 	#	values = arr.map{ |item| params[item.to_sym] }
 	#	data = arr.zip(values).to_h
