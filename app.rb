@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'sinatra'
+require 'sinatra/flash'
 require 'slim'
 require 'hiredis'
 require 'redis'
@@ -8,7 +9,6 @@ require 'qiniu'
 require 'json'
 require 'active_support/inflector'
 require 'bcrypt'
-
 if development?
   require 'pry'
   require './env.rb' if File.exists?('env.rb')
@@ -18,8 +18,8 @@ enable :sessions
 
 before do
   setup_redis
-
   before_login
+  setup_qiniu
 
   # set @members or @papers
   name = request.path.slice(/members|papers/)
@@ -28,7 +28,6 @@ end
 
 # qiniu uptoken
 get '/qiniu/token' do
-  setup_qiniu
   put_policy = Qiniu::Auth::PutPolicy.new('loab')
   uptoken = Qiniu::Auth.generate_uptoken(put_policy)
   {"uptoken" => uptoken}.to_json
@@ -46,6 +45,13 @@ post '/login' do
     session[:admin] = params[:username]
     redirect('/admin/home')
   end
+  flash[:error] = "Username don't match password"
+  redirect('/login')
+end
+
+get '/logout' do
+  session[:admin] = nil
+  redirect('/')
 end
 
 

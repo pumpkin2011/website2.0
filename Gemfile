@@ -1,5 +1,6 @@
 source 'https://ruby.taobao.org/'
 gem 'sinatra'
+gem 'sinatra-flash'
 gem 'json'
 gem 'redis'
 gem 'hiredis'

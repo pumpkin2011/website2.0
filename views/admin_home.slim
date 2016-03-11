@@ -1,12 +1,8 @@
-
 form.form-horizontal method="post"
   .form-group
     .col-sm-10
       img#upload src=@home['image_url'] class="img-responsive img-rounded" alt="Responsive image"
-
-  .form-group
-    .col-sm-10
-      input#image_text.form-control name="image_url" value=@home['image_url'] readonly="readonly"
+      input#image_text.form-control type="hidden" name="image_url" value=@home['image_url']
 
   .form-group
     .col-sm-10
