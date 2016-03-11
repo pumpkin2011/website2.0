@@ -10,6 +10,6 @@ gem 'activesupport'
 gem 'bcrypt'
 gem 'task'
 group :development do
-	gem 'rerun'
-	gem 'pry'
+  gem 'rerun'
+  gem 'pry'
 end

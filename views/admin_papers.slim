@@ -1,23 +1,23 @@
 .media
-	.media-head
-		a.btn.btn-primary href="/admin/paper/new"
-			| new
-	.media-body
-		table.table
-			thead
-				tr
-					th id
-					th date
-					th content
-					th
-			tbody
-				- @papers.each do |paper|
-					tr
-						td = paper['id']
-						td 
-							a href="/admin/paper/edit/#{paper['id']}"
-								= paper['date']
-						td == paper['content']
-						td
-							a.btn.btn-danger href="/admin/paper/delete/#{paper["id"]}" 
-								| delete
+  .media-head
+    a.btn.btn-primary href="/admin/paper/new"
+      | new
+  .media-body
+    table.table
+      thead
+        tr
+          th id
+          th date
+          th content
+          th
+      tbody
+        - @papers.each do |paper|
+          tr
+            td = paper['id']
+            td
+              a href="/admin/paper/edit/#{paper['id']}"
+                = paper['date']
+            td == paper['content']
+            td
+              a.btn.btn-danger href="/admin/paper/delete/#{paper["id"]}"
+                | delete

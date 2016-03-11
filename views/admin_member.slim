@@ -8,39 +8,39 @@ script src=("/qiniu/qiniu.min.js") type="text/javascript"
 script src=("/qiniu/main.js") type="text/javascript"
 
 form.form-horizontal action="/admin/member" method="post"
-	input type="hidden" name="_method" value="#{@member.empty? ? 'post' : 'put'}"
+  input type="hidden" name="_method" value="#{@member.empty? ? 'post' : 'put'}"
 
-	.media
-		.media-left
-			- if @member['image_url']
-				img#upload.media-object src="#{@member['image_url']}-profile" width="200" height="200" alt="profile"
-			- else
-				img#upload.media-object src="/images/profile1.jpg" width="200" height="200" alt="profile"
+  .media
+    .media-left
+      - if @member['image_url']
+        img#upload.media-object src="#{@member['image_url']}-profile" width="200" height="200" alt="profile"
+      - else
+        img#upload.media-object src="/images/profile1.jpg" width="200" height="200" alt="profile"
 
-		.media-body
-			.form-group
-				.col-sm-9
-					input.form-control name="id" value=@member['id'] readonly="readonly" placeholder="id"
+    .media-body
+      .form-group
+        .col-sm-9
+          input.form-control name="id" value=@member['id'] readonly="readonly" placeholder="id"
 
-			.form-group
-				.col-sm-9
-					input#image_text.form-control name="image_url" value=@member['image_url'] placeholder="image_url" readonly="readonly"
+      .form-group
+        .col-sm-9
+          input#image_text.form-control name="image_url" value=@member['image_url'] placeholder="image_url" readonly="readonly"
 
-			.form-group
-				.col-sm-9
-					input.form-control name="name" value=@member['name'] placeholder="name"
+      .form-group
+        .col-sm-9
+          input.form-control name="name" value=@member['name'] placeholder="name"
 
-	.media
-		.media-body
-			.form-group
-				.col-sm-10
-					textarea#editor.form-control name="intro"
-						= @member['intro']
+  .media
+    .media-body
+      .form-group
+        .col-sm-10
+          textarea#editor.form-control name="intro"
+            = @member['intro']
 
-	.form-group
-		.col-sm-offset-2.col-sm-10
-			button.btn.btn-default type="submit" submit
-			a.btn.btn-default href="/admin/members" back
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      button.btn.btn-default type="submit" submit
+      a.btn.btn-default href="/admin/members" back
 
 javascript:
-	var editor = new Simditor({ textarea: $('#editor') });
+  var editor = new Simditor({ textarea: $('#editor') });

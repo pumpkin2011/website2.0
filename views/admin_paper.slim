@@ -1,20 +1,19 @@
 form action="/admin/paper" method="post"
-	input type="hidden" name="_method" value="#{@paper.empty? ? 'post' : 'put'}"
+  input type="hidden" name="_method" value="#{@paper.empty? ? 'post' : 'put'}"
 
-	.form-group
-		label for="" id 
-		input.form-control name="id" value=@paper['id'] placeholder="id" readonly="readonly"
+  .form-group
+    label for="" id
+    input.form-control name="id" value=@paper['id'] placeholder="id" readonly="readonly"
 
-	.form-group
-		label for="" date 
-		input.form-control name="date" value=@paper['date'] placeholder="date"
+  .form-group
+    label for="" date
+    input.form-control name="date" value=@paper['date'] placeholder="date"
 
-	.form-group
-		label for="" content 
-		textarea.form-control name="content" placeholder="content" 
-			=@paper['content']
+  .form-group
+    label for="" content
+    textarea.form-control name="content" placeholder="content"
+      =@paper['content']
 
-	.form-group
-		button.btn.btn-default type="submit" Submit
-		a.btn.btn-warning href="/admin/papers" back 
-
+  .form-group
+    button.btn.btn-default type="submit" Submit
+    a.btn.btn-warning href="/admin/papers" back

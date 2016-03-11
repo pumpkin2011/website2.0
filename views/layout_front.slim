@@ -12,15 +12,15 @@ html
     script src="/bootstrap/js/jquery.min.js"
     script src="/bootstrap/js/bootstrap.min.js"
   body
-		nav.navbar.navbar-default.navbar-fixed-top
-			.container
-				.navbar-header
-					a.navbar-brand href="/"  Project name
-				#navbar.collapse.navbar-collapse
-					ul.nav.navbar-nav
-						li class = nav('/members')
-							a href="/members" Members
-						li class = nav('/papers')
-							a href="/papers" Papers
-		.container
-			== yield
+    nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          a.navbar-brand href="/"  Project name
+        #navbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li class = nav('/members')
+              a href="/members" Members
+            li class = nav('/papers')
+              a href="/papers" Papers
+    .container
+      == yield
