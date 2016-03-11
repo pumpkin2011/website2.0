@@ -21,8 +21,6 @@ before do
 
   before_login
 
-  setup_qiniu
-
   # set @members or @papers
   name = request.path.slice(/members|papers/)
   set_data(name) if name
@@ -30,6 +28,7 @@ end
 
 # qiniu uptoken
 get '/qiniu/token' do
+  setup_qiniu
   put_policy = Qiniu::Auth::PutPolicy.new('loab')
   uptoken = Qiniu::Auth.generate_uptoken(put_policy)
   {"uptoken" => uptoken}.to_json
