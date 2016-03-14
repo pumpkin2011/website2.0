@@ -45,7 +45,7 @@ post '/login' do
     session[:admin] = params[:username]
     redirect('/admin/home')
   end
-  flash[:error] = "Username don't match password"
+  flash[:error] = "Username doesn't match the password"
   redirect('/login')
 end
 
@@ -185,34 +185,29 @@ end
 def set_data(name)
   singular_name = name.singularize
   instance_name = "@#{name}"
-  ids = $redis.zrange("#{singular_name}:ids", 0, -1, withscores: true).map(&:first)
-  values = $redis.hgetall(name).values.map!{|item| eval item }.sort_by { |a| ids.index(a[:id].to_s) }
+  ids = $redis.zrange("#{singular_name}:ids", 0, -1)
+  values = $redis.hgetall(name).values.map!{|item| eval item }.sort_by { |a| ids.index(a['id'].to_s) }
   instance_variable_set(instance_name, values)
 end
 
 # create or update a record
 def create_or_update_record(name, arr)
   plural_name = name.pluralize
-  ids  = $redis.zrange("#{name}:ids", 0, -1, withscores: true)
-  if params[:id].empty? then
-    id   = (ids.map(&:first).max || 0).to_i + 1
-    sort = (ids.map(&:last).max || 0).to_i + 1
-  end
+  ids  = $redis.zrange("#{name}:ids", 0, -1, withscores: true).to_h
+	id, sort = ids.keys.max.to_i+1, ids.values.max.to_i+1 if params[:id].empty?
   data = {}
-  arr.each do |item|
-    data[item] = params[item.to_sym]
-  end
+  arr.each { |item| data[item] = params[item.to_sym] }
   # values = arr.map{ |item| params[item.to_sym] }
   # data = arr.zip(values).to_h
   data["id"] = Integer(params[:id]) rescue id
-  begin
-    $redis.zadd("#{name}:ids", sort, id) if params[:id].empty?
-    $redis.hmset(plural_name, "#{name}:#{data['id']}", data)
-  rescue
-    logger.info "store data error"
-    $redis.zrem("#{name}:ids", id) if params[:id].empty?
-    $redis.hdel(plural_name, "#{name}:#{data['id']}")
-  end
+  # begin
+  $redis.zadd("#{name}:ids", sort, id) if params[:id].empty?
+  $redis.hmset(plural_name, "#{name}:#{data['id']}", data)
+  # rescue
+  #   # logger.info "store data failed"
+  #   $redis.zrem("#{name}:ids", id) if params[:id].empty?
+  #   $redis.hdel(plural_name, "#{name}:#{data['id']}")
+  # end
   redirect("/admin/#{plural_name}")
 end
 
