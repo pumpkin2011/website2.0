@@ -14,10 +14,11 @@
           - @members.each do |member|
             tr
               td = member['id']
-              td
-                a href="/admin/member/edit/#{member['id']}"
-                  = member['name']
+              td = member['name']
               td == member['intro']
               td
+                a.btn.btn-warning href="/admin/member/edit/#{member['id']}"
+                  | edit
+                '
                 a.btn.btn-danger href="/admin/member/delete/#{member["id"]}"
                   | delete

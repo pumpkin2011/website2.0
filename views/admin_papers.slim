@@ -14,10 +14,11 @@
         - @papers.each do |paper|
           tr
             td = paper['id']
-            td
-              a href="/admin/paper/edit/#{paper['id']}"
-                = paper['date']
+            td = paper['date']
             td == paper['content']
             td
+              a.btn.btn-warning href="/admin/paper/edit/#{paper['id']}"
+                | edit
+              '
               a.btn.btn-danger href="/admin/paper/delete/#{paper["id"]}"
                 | delete
