@@ -38,9 +38,10 @@ form.form-horizontal action="/admin/member" method="post"
             = @member['intro']
 
   .form-group
-    .col-sm-offset-2.col-sm-10
-      button.btn.btn-default type="submit" submit
-      a.btn.btn-default href="/admin/members" back
+    .col-sm-10
+      button.btn.btn-success.btn-lg type="submit" submit
+      '
+      a.btn.btn-warning.btn-lg href="/admin/members" back
 
 javascript:
   var editor = new Simditor({ textarea: $('#editor') });
