@@ -9,7 +9,7 @@ $(function() {
 		unique_names: true,
     domain: 'http://7xq1xj.com1.z0.glb.clouddn.com/',
     // container: 'container',           //上传区域DOM ID，默认是browser_button的父元素，
-    max_file_size: '5mb',           //最大文件体积限制
+    max_file_size: '15mb',           //最大文件体积限制
     // flash_swf_url: 'js/plupload/Moxie.swf',  //引入flash,相对路径
 		flash_swf_url: '/uploader.swf',
     max_retries: 3,                   //上传失败最大重试次数
@@ -30,6 +30,7 @@ $(function() {
 				// alert("每个文件上传时,处理相关的事情");
       },
       'FileUploaded': function(up, file, info) {
+        alert("success")
 				// 每个文件上传成功后,处理相关的事情
 				// 其中 info 是文件上传成功后，服务端返回的json，形式如
 				// {
@@ -40,7 +41,7 @@ $(function() {
 				var domain = up.getOption('domain');
 				var res = $.parseJSON(info);
 				var sourceLink = domain + res.key;
-				$('#image_text').val(sourceLink)
+				$('#qiniu_field').val(sourceLink)
 				$('#upload').prop('src', sourceLink)
       },
       'Error': function(up, err, errTip) {

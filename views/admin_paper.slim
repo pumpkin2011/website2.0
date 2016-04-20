@@ -1,3 +1,7 @@
+script src=("/qiniu/plupload.full.min.js") type="text/javascript"
+script src=("/qiniu/qiniu.min.js") type="text/javascript"
+script src=("/qiniu/main.js") type="text/javascript"
+
 form action="/admin/paper" method="post"
   input type="hidden" name="_method" value="#{@paper.empty? ? 'post' : 'put'}"
 
@@ -13,6 +17,13 @@ form action="/admin/paper" method="post"
     label for="" content
     textarea.form-control name="content" placeholder="content"
       =@paper['content']
+
+  .form-group
+    label for="" pdf url
+    input#qiniu_field.form-control  name="pdf_url" value=@paper['pdf_url'] placeholder="url" readonly="readonly"
+
+  .form-group
+    button#upload.btn.btn-default.btn-default upload a pdf
 
   .form-group
     button.btn.btn-success.btn-lg type="submit" Submit

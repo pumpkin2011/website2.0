@@ -1,4 +1,11 @@
 ol
   - @papers.each do |paper|
-    li = paper["content"]
+    li
+      = paper["content"]
+      '
+      a href=paper["pdf_url"] target="_blank"
+        span.glyphicon.glyphicon-eye-open taria-hidden="true"
+      '
+      a href="#{paper["pdf_url"]}?attname="
+        span.glyphicon.glyphicon-download-alt aria-hidden="true"
     hr

@@ -129,7 +129,7 @@ get '/admin/paper/new' do
 end
 
 post '/admin/paper' do
-  create_or_update_record('paper', %w(id date content))
+  create_or_update_record('paper', %w(id date content pdf_url))
 end
 
 get '/admin/paper/edit/:id' do
@@ -138,7 +138,7 @@ get '/admin/paper/edit/:id' do
 end
 
 put '/admin/paper' do
-  create_or_update_record('paper', %w(id date content))
+  create_or_update_record('paper', %w(id date content pdf_url))
 end
 
 get '/admin/paper/delete/:id' do

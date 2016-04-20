@@ -9,13 +9,16 @@
           th id
           th date
           th content
-          th
+          th pdf
       tbody
         - @papers.each do |paper|
           tr
             td = paper['id']
             td = paper['date']
             td == paper['content']
+            td 
+              a href=paper['pdf_url'] target="_blank"
+                'pdf
             td
               a.btn.btn-warning.btn-sm href="/admin/paper/edit/#{paper['id']}"
                 | edit
