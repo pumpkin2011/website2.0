@@ -6,21 +6,17 @@ form action="/admin/paper" method="post"
   input type="hidden" name="_method" value="#{@paper.empty? ? 'post' : 'put'}"
 
   .form-group
-    label for="" id
-    input.form-control name="id" value=@paper['id'] placeholder="id" readonly="readonly"
+    input.form-control name="id" value=@paper['id'] placeholder="ID" readonly="readonly"
 
   .form-group
-    label for="" date
-    input.form-control name="date" value=@paper['date'] placeholder="date"
+    input.form-control name="date" value=@paper['date'] placeholder="Date"
 
   .form-group
-    label for="" content
-    textarea.form-control name="content" placeholder="content"
+    textarea.form-control name="content" placeholder="Content"
       =@paper['content']
 
   .form-group
-    label for="" pdf url
-    input#qiniu_field.form-control  name="pdf_url" value=@paper['pdf_url'] placeholder="url" readonly="readonly"
+    input#qiniu_field.form-control  name="pdf_url" value=@paper['pdf_url'] placeholder="Pdf Url" readonly="readonly"
 
   .form-group
     button#upload.btn.btn-default.btn-default upload a pdf

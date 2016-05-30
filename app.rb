@@ -69,6 +69,14 @@ get '/papers' do
   slim :papers, layout: :layout_front
 end
 
+get '/research_interests' do
+  'Research Interests'
+end
+
+get '/contact' do
+  'xxx-xxx-xxxx'
+end
+
 # admin
 # index
 get '/admin' do
@@ -194,7 +202,7 @@ end
 def create_or_update_record(name, arr)
   plural_name = name.pluralize
   ids  = $redis.zrange("#{name}:ids", 0, -1, withscores: true).to_h
-	id, sort = ids.keys.max.to_i+1, ids.values.max.to_i+1 if params[:id].empty?
+  id, sort = ids.keys.max.to_i+1, ids.values.max.to_i+1 if params[:id].empty?
   data = {}
   arr.each { |item| data[item] = params[item.to_sym] }
   # values = arr.map{ |item| params[item.to_sym] }
