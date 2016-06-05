@@ -1,27 +1,33 @@
-.media
-  .media-head
-    a.btn.btn-primary href="/admin/paper/new"
-      | new
-  .media-body
-    table.table
-      thead
-        tr
-          th id
-          th date
-          th content
-          th pdf
-      tbody
-        - @papers.each do |paper|
-          tr
-            td = paper['id']
-            td = paper['date']
-            td == paper['content']
-            td 
-              a href=paper['pdf_url'] target="_blank"
-                'pdf
-            td
-              a.btn.btn-warning.btn-sm href="/admin/paper/edit/#{paper['id']}"
-                | edit
-              '
-              a.btn.btn-danger.btn-sm href="/admin/paper/delete/#{paper["id"]}"
-                | delete
+a#newbutton.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored href="/admin/paper/new"
+  i.material-icons add
+table.mdl-data-table.mdl-js-data-table.mdl-shadow--1dp
+  thead
+    tr
+      th ID
+      th.mdl-data-table__cell--non-numeric DATE
+      th.mdl-data-table__cell--non-numeric CONTENT
+      th.mdl-data-table__cell--non-numeric PDF
+      th.mdl-data-table__cell--non-numeric OPTIONS
+  tbody
+    - @papers.each do |paper|
+      tr
+        td = paper['id']
+        td.mdl-data-table__cell--non-numeric = paper['date']
+        td.mdl-data-table__cell--non-numeric
+          a.btn.btn-warning.btn-sm href="/admin/paper/edit/#{paper['id']}"
+            == paper['content']
+        td.mdl-data-table__cell--non-numeric
+          a href=paper['pdf_url'] target="_blank"
+            'pdf
+        td.mdl-data-table__cell--non-numeric
+          a.mdl-navigation__link href="/admin/paper/delete/#{paper["id"]}"
+            i.mdl-color-text--blue-grey-400.material-icons role="presentation" delete
+
+css:
+  table { width: 100%; }
+  .mdl-data-table { width: 100%; }
+  #newbutton {
+    margin-bottom: 10px;
+    color: #fff;
+    margin-left: 0;
+  }

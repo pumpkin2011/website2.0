@@ -1,18 +1,12 @@
-form.form-horizontal method="post"
-  .form-group
-    .col-sm-10
-      .img-field
-        img#upload src=@home['image_url'] class="img-responsive img-rounded" alt="Responsive image"
-        input#qiniu_field.form-control type="hidden" name="image_url" value=@home['image_url']
+form method="post"
+  #imagewrap.demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--12-col.mdl-grid
+    img#upload.homeimg src=@home['image_url'] class="img-responsive img-rounded" alt="Responsive image"
+    input#qiniu_field.form-control type="hidden" name="image_url" value=@home['image_url']
+  #textareawrap.demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--12-col.mdl-grid
+    textarea#editor name="intro" rows="8"
+      = @home['intro']
 
-  .form-group
-    .col-sm-10
-      textarea#editor.form-control name="intro" rows="8"
-        = @home['intro']
-
-  .form-group
-    .col-sm-10
-      button.btn.btn-success.btn-lg type="submit" submit
+  button#submit.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--accent type="submit" submit
 
 link href=("/simditors/simditor/styles/simditor.css") rel="stylesheet" type="text/css"
 script src=("/simditors/simple-module/lib/module.js") type="text/javascript"
@@ -22,6 +16,17 @@ script src=("/simditors/simditor/lib/simditor.js") type="text/javascript"
 script src=("/qiniu/plupload.full.min.js") type="text/javascript"
 script src=("/qiniu/qiniu.min.js") type="text/javascript"
 script src=("/qiniu/main.js") type="text/javascript"
+
+css:
+  #upload.homeimg { width: 100%; }
+  #imagewrap { padding: 1px; }
+  #textareawrap { padding: 0; }
+  #submit.mdl-button--accent.mdl-button--accent {
+    color: #fff;
+    width: 200px;
+    height: 50px;
+    margin-left: 8px;
+  }
 
 javascript:
   var editor = new Simditor({

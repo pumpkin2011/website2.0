@@ -1,24 +1,31 @@
-  .media
-    .media-head
-      a.btn.btn-primary href="/admin/member/new"
-        | new
-    .media-body
-      table.table
-        thead
-          tr
-            th id
-            th name
-            th introduction
-            th
-        tbody
-          - @members.each do |member|
-            tr
-              td = member['id']
-              td = member['name']
-              td == member['intro']
-              td
-                a.btn.btn-warning.btn-sm href="/admin/member/edit/#{member['id']}"
-                  | edit
-                '
-                a.btn.btn-danger.btn-sm href="/admin/member/delete/#{member["id"]}"
-                  | delete
+/a.btn.btn-primary href="/admin/member/new" new
+/a#new.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--accent href="/admin/member/new" add a member
+a#newbutton.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored href="/admin/member/new"
+  i.material-icons add
+
+table.mdl-data-table.mdl-js-data-table.mdl-shadow--1dp
+  thead
+    tr
+      th ID
+      th.mdl-data-table__cell--non-numeric NAME
+      th.mdl-data-table__cell--non-numeric INTRODUCTION
+      th.mdl-data-table__cell--non-numeric OPTIONS
+  tbody
+    - @members.each do |member|
+      tr
+        td = member['id']
+        td.mdl-data-table__cell--non-numeric
+          a href="/admin/member/edit/#{member['id']}"
+            = member['name']
+        td.mdl-data-table__cell--non-numeric == member['intro']
+        td.mdl-data-table__cell--non-numeric
+          a.mdl-navigation__link href="/admin/member/delete/#{member["id"]}"
+            i.mdl-color-text--blue-grey-400.material-icons role="presentation" delete
+
+css:
+  .mdl-data-table { width: 100%; }
+  #newbutton {
+    margin-bottom: 10px;
+    color: #fff;
+    margin-left: 0;
+  }

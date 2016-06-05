@@ -158,7 +158,7 @@ end
 # helpers
 helpers do
   def nav(str=nil)
-    request.path =~ /#{str}/ ? 'active' : ''
+    request.path =~ /#{str}/ ? 'actived' : ''
   end
 
   def admin_name

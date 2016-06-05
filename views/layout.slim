@@ -1,45 +1,98 @@
 doctype html
-html
+html lang="en"
   head
-    meta charset="utf-8"
-    meta content="IE=edge" http-equiv="X-UA-Compatible"
-    meta content="width=device-width, initial-scale=1" name="viewport" /
+    meta charset="utf-8" /
+    meta content="IE=edge" http-equiv="X-UA-Compatible" /
+    / meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0" name="viewport" /
+    title Material Design Lite
+    /! Add to homescreen for Chrome on Android
+    meta content="yes" name="mobile-web-app-capable" /
+    link href="images/android-desktop.png" rel="icon" sizes="192x192" /
+    /! Add to homescreen for Safari on iOS
+    meta content="yes" name="apple-mobile-web-app-capable" /
+    meta content="black" name="apple-mobile-web-app-status-bar-style" /
+    meta content=("Material Design Lite") name="apple-mobile-web-app-title" /
+    link href="images/ios-desktop.png" rel="apple-touch-icon-precomposed" /
+    /! Tile icon for Win8 (144x144 + tile color)
+    meta content="images/touch/ms-touch-icon-144x144-precomposed.png" name="msapplication-TileImage" /
+    meta content="#3372DF" name="msapplication-TileColor" /
+    link href="images/favicon.png" rel=("shortcut icon") /
 
-    title admin
+    link href="/material-design-lite/cyan-light_blue.min.css" rel="stylesheet" /
+    link href="/assets/admin.css" rel="stylesheet" /
+    link href="/material-design-lite/styles.css" rel="stylesheet" /
+    script src="/assets/jquery.min.js"
 
-    link rel="stylesheet" type='text/css' href="/bootstrap/css/bootstrap.css"
-    link rel="stylesheet" type='text/css' href="/assets/dashboard.css"
-    link rel="stylesheet" type='text/css' href="/assets/admin.css"
-    script src="/bootstrap/js/jquery.min.js"
-    script src="/bootstrap/js/bootstrap.min.js"
-    body
-      nav.navbar.navbar-inverse.navbar-fixed-top
-        .container-fluid
-          .navbar-header
-            button.navbar-toggle.collapsed aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" type="button"
-              span.sr-only Toggle navigation
-              span.icon-bar
-              span.icon-bar
-              span.icon-bar
-            a.navbar-brand href="#"  HLAB admin
-
-          #navbar.navbar-collapse.collapse
-            ul.nav.navbar-nav.navbar-right
-              li
-                a href="/logout" Logout
-
-      .container-fluid
-        .row
-          .col-sm-3.col-md-2.sidebar
-            ul.nav.nav-sidebar
-              li class=nav("home")
-                a href="/admin/home"
-                  | home
-                  span.sr-only (current)
-              li class=nav("member")
-                a href="/admin/members" members
-              li class=nav('paper')
-                a href="/admin/papers" Papers
-
-        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+  body
+    .demo-layout.mdl-layout.mdl-js-layout.mdl-layout--fixed-drawer.mdl-layout--fixed-header
+      header.demo-header.mdl-layout__header.mdl-color--grey-100.mdl-color-text--grey-600
+        .mdl-layout__header-row
+          span.mdl-layout-title Homepage
+          .mdl-layout-spacer
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
+            label.mdl-button.mdl-js-button.mdl-button--icon for="search"
+              i.material-icons search
+            .mdl-textfield__expandable-holder
+              input#search.mdl-textfield__input type="text" /
+              label.mdl-textfield__label for="search"  Enter your query...
+          button#hdrbtn.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
+            i.material-icons more_vert
+          ul.mdl-menu.mdl-js-menu.mdl-js-ripple-effect.mdl-menu--bottom-right for="hdrbtn"
+            li.mdl-menu__item About
+            li.mdl-menu__item Contact
+            li.mdl-menu__item Legal information
+      .demo-drawer.mdl-layout__drawer.mdl-color--blue-grey-900.mdl-color-text--blue-grey-50
+        header.demo-drawer-header
+          img.demo-avatar src="" /
+          .demo-avatar-dropdown
+            span hello@example.com
+            .mdl-layout-spacer
+            button#accbtn.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
+              i.material-icons role="presentation"  arrow_drop_down
+              span.visuallyhidden Accounts
+            ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect for="accbtn"
+              li.mdl-menu__item hello@example.com
+              li.mdl-menu__item info@example.com
+              li.mdl-menu__item
+                i.material-icons> add
+                | Add another account...
+        nav.demo-navigation.mdl-navigation.mdl-color--blue-grey-800
+          a.mdl-navigation__link class=nav('home') href="/admin/home"
+            i.mdl-color-text--blue-grey-400.material-icons role="presentation" home
+            | Homepage
+          a.mdl-navigation__link class=nav('member') href="/admin/members"
+            i.mdl-color-text--blue-grey-400.material-icons role="presentation" people
+            | Members
+          a.mdl-navigation__link class=nav('paper') href="/admin/papers"
+            i.mdl-color-text--blue-grey-400.material-icons role="presentation" book
+            | Papers
+          a.mdl-navigation__link class=nav('interest') href=""
+            i.mdl-color-text--blue-grey-400.material-icons role="presentation" report
+            | Interests
+          a.mdl-navigation__link class=nav('contact') href=""
+            i.mdl-color-text--blue-grey-400.material-icons role="presentation" forum
+            | Contact
+          .mdl-layout-spacer
+          a.mdl-navigation__link href=""
+            i.mdl-color-text--blue-grey-400.material-icons role="presentation"  help_outline
+            span.visuallyhidden Help
+      main.mdl-layout__content.mdl-color--grey-100
+        .mdl-grid.demo-content
           == yield
+
+    script src="/material-design-lite/material.min.js"
+
+css:
+  #view-source {
+    position: fixed;
+    display: block;
+    right: 0;
+    bottom: 0;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    z-index: 900;
+  }
+  .actived {
+    background-color: #00BCD4;
+    color: #37474F;
+  }
