@@ -8,10 +8,15 @@ form action="/admin/paper" method="post"
       input.mdl-textfield__input type="hidden" name="_method" value="#{@paper.empty? ? 'post' : 'put'}"
       .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
         input.mdl-textfield__input name="id" value=@paper['id'] readonly="readonly"
-        label.mdl-textfield__label for="sample3" ID
+        label.mdl-textfield__label ID
+
+      .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+        input.mdl-textfield__input name="title" value=@paper['title'] required="required"
+        label.mdl-textfield__label TITLE
+
       .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
         input.mdl-textfield__input name="date" value=@paper['date'] required="required"
-        label.mdl-textfield__label for="sample3" DATE
+        label.mdl-textfield__label DATE
 
       .mdl-textfield.mdl-js-textfield
         textarea#sample5.mdl-textfield__input rows="3" type="text" name="content"

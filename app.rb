@@ -9,6 +9,7 @@ require 'qiniu'
 require 'json'
 require 'active_support/inflector'
 require 'bcrypt'
+require 'sass'
 if development?
   require 'pry'
   require './env.rb' if File.exists?('env.rb')
@@ -137,7 +138,7 @@ get '/admin/paper/new' do
 end
 
 post '/admin/paper' do
-  create_or_update_record('paper', %w(id date content pdf_url))
+  create_or_update_record('paper', %w(id date title content pdf_url))
 end
 
 get '/admin/paper/edit/:id' do
@@ -146,7 +147,7 @@ get '/admin/paper/edit/:id' do
 end
 
 put '/admin/paper' do
-  create_or_update_record('paper', %w(id date content pdf_url))
+  create_or_update_record('paper', %w(id date title content pdf_url))
 end
 
 get '/admin/paper/delete/:id' do

@@ -10,6 +10,7 @@ gem 'unicorn'
 gem 'activesupport'
 gem 'bcrypt'
 gem 'task'
+gem 'sass'
 group :development do
   gem 'rerun'
   gem 'pry'

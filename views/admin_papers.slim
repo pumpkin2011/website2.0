@@ -5,7 +5,7 @@ table.mdl-data-table.mdl-js-data-table.mdl-shadow--1dp
     tr
       th ID
       th.mdl-data-table__cell--non-numeric DATE
-      th.mdl-data-table__cell--non-numeric CONTENT
+      th.mdl-data-table__cell--non-numeric TITLE
       th.mdl-data-table__cell--non-numeric PDF
       th.mdl-data-table__cell--non-numeric OPTIONS
   tbody
@@ -15,7 +15,7 @@ table.mdl-data-table.mdl-js-data-table.mdl-shadow--1dp
         td.mdl-data-table__cell--non-numeric = paper['date']
         td.mdl-data-table__cell--non-numeric
           a.btn.btn-warning.btn-sm href="/admin/paper/edit/#{paper['id']}"
-            == paper['content']
+            == paper['title']
         td.mdl-data-table__cell--non-numeric
           a href=paper['pdf_url'] target="_blank"
             'pdf

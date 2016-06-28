@@ -1,6 +1,19 @@
-- require 'pry'
-.home-image
-  img.img-responsive.img-rounded src = "#{@home["image_url"]}-homepage"
+.home-banner
+  .home-content
+    == @home["intro"]
 
-.home-content
-  == @home["intro"]
+css:
+  .home-banner {
+    width: 100wh;
+    height: 100vh;
+    background: url("#{@home["image_url"]}") no-repeat center center;
+    background-size: cover;
+    text-align: center;
+  }
+
+  .home-content {
+    position: absolute;
+    top: 50vh;
+    font-size: 30px;
+    color: #fff;
+  }

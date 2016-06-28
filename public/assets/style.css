@@ -1,11 +1,21 @@
 body {
-  padding-top: 70px;
+  margin: 0;
+  background-color: #f6f6f6;
+  color: #666;
 }
 
-.container {
-  width: 1140px;
+a {
+  text-decoration: none;
 }
 
-.home-content {
-  margin-top: 40px;
+.clearfix:before,
+ .clearfix:after {
+    content: " ";
+    display: table;
+ }
+.clearfix:after {
+    clear: both;
+}
+.clearfix {
+    *zoom: 1;
 }
