@@ -4,13 +4,10 @@
       li
         .head
           .title
-            = paper["title"]
-          '
-          a href=paper["pdf_url"] target="_blank"
-            |(view
+            a href=paper["pdf_url"] target="_blank" = paper["title"]
           '
           a href="#{paper["pdf_url"]}?attname="
-            |download)
+            | &#8595;
         p.content = paper["content"]
 
 scss:

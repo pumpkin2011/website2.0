@@ -23,7 +23,7 @@ before do
   setup_qiniu
 
   # set @members or @papers
-  name = request.path.slice(/members|papers/)
+  name = request.path.slice(/members|papers|interests/)
   set_data(name) if name
 end
 
@@ -36,7 +36,7 @@ end
 
 # login
 get '/login' do
-  slim :login, layout: :layout_front
+  slim :'front/login', layout: :layout_front
 end
 
 post '/login' do
@@ -59,19 +59,19 @@ end
 # front
 get '/' do
   @home = $redis.hgetall('home')
-  slim :index, layout: :layout_front
+  slim :'front/index', layout: :layout_front
 end
 
 get '/members' do
-  slim :members, layout: :layout_front
+  slim :'front/members', layout: :layout_front
 end
 
 get '/papers' do
-  slim :papers, layout: :layout_front
+  slim :'front/papers', layout: :layout_front
 end
 
-get '/research_interests' do
-  'Research Interests'
+get '/interests' do
+  slim :'front/interests', layout: :layout_front
 end
 
 get '/contact' do
@@ -86,7 +86,7 @@ end
 
 get '/admin/home' do
   @home = $redis.hgetall("home")
-  slim :admin_home
+  slim :'admin/index'
 end
 
 post '/admin/home' do
@@ -100,12 +100,12 @@ end
 
 # members
 get '/admin/members' do
-  slim :admin_members
+  slim :'admin/members'
 end
 
 get '/admin/member/new' do
   @member = {}
-  slim :admin_member
+  slim :'admin/member'
 end
 
 post '/admin/member' do
@@ -114,7 +114,7 @@ end
 
 get '/admin/member/edit/:id' do
   @member = eval $redis.hget("members", "member:#{params[:id]}")
-  slim :admin_member
+  slim :'admin/member'
 end
 
 put '/admin/member' do
@@ -129,12 +129,12 @@ end
 
 # papers
 get '/admin/papers' do
-  slim :admin_papers
+  slim :'admin/papers'
 end
 
 get '/admin/paper/new' do
   @paper = {}
-  slim :admin_paper
+  slim :'admin/paper'
 end
 
 post '/admin/paper' do
@@ -143,7 +143,7 @@ end
 
 get '/admin/paper/edit/:id' do
   @paper = eval $redis.hget("papers", "paper:#{params[:id]}")
-  slim :admin_paper
+  slim :'admin/paper'
 end
 
 put '/admin/paper' do
