@@ -1,8 +1,8 @@
 #interests
-  .title
-    p
-  .content
-    p
+  - @interests.each do |interest|
+    .title = interest['title']
+    .content = interest['content']
+    .image = interest['image_url']
 
 scss:
   #interests {

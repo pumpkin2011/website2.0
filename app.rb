@@ -156,6 +156,35 @@ end
 
 # -----------------
 
+#interests
+get '/admin/interests' do
+  slim :'admin/interests'
+end
+
+get '/admin/interest/new' do
+  @interest = {}
+  slim :'admin/interest'
+end
+
+post '/admin/interest' do
+  create_or_update_record('interest', %w(id title content image_url))
+end
+
+get '/admin/interest/edit/:id' do
+  @interest = eval $redis.hget("interests", "interest:#{params[:id]}")
+  slim :'admin/interest'
+end
+
+put '/admin/interest' do
+  create_or_update_record('interest', %w(id title content pdf_url))
+end
+
+get '/admin/interest/delete/:id' do
+  delete_record('interest', params[:id])
+end
+
+# -----------------
+
 # helpers
 helpers do
   def nav(str=nil)

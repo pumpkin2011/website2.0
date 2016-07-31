@@ -1,7 +1,30 @@
-div#interests
-  p this is our search interests
+a#newbutton.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored href="/admin/interest/new"
+  i.material-icons add
+table.mdl-data-table.mdl-js-data-table.mdl-shadow--1dp
+  thead
+    tr
+      th ID
+      th.mdl-data-table__cell--non-numeric TITLE
+      th.mdl-data-table__cell--non-numeric CONTENT
+      th.mdl-data-table__cell--non-numeric OPTIONS
+  tbody
+    - @interests.each do |interest|
+      tr
+        td = interest['id']
+        td.mdl-data-table__cell--non-numeric
+          a.btn.btn-warning.btn-sm href="/admin/interest/edit/#{interest['id']}"
+            == interest['title']
+        td.mdl-data-table__cell--non-numeric
+          = interest['content']
+        td.mdl-data-table__cell--non-numeric
+          a.mdl-navigation__link href="/admin/interest/delete/#{interest["id"]}"
+            i.mdl-color-text--blue-grey-400.material-icons role="presentation" delete
 
-scss:
-  #interests {
-    margin-top: 75px;
+css:
+  table { width: 100%; }
+  .mdl-data-table { width: 100%; }
+  #newbutton {
+    margin-bottom: 10px;
+    color: #fff;
+    margin-left: 0;
   }

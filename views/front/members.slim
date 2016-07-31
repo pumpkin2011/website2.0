@@ -2,7 +2,7 @@
   - @members.each do |member|
     .card
       .profile
-        img.profile alt="" src=member['image_url']
+        img.profile alt="" src=member['image_url']+'-profile'
         h2.name = member['name']
       .intro
         == member['intro']
