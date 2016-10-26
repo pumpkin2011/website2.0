@@ -46,7 +46,7 @@ post '/login' do
     session[:admin] = params[:username]
     redirect('/admin/home')
   end
-  flash[:error] = "Username doesn't match the password"
+  flash[:error] = "Wrong Username Or Password"
   redirect('/login')
 end
 
