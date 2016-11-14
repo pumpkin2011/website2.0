@@ -1,5 +1,5 @@
 GEM
-  remote: https://ruby.taobao.org/
+  remote: https://gems.ruby-china.org/
   specs:
     activesupport (4.2.5.2)
       i18n (~> 0.7)
@@ -25,6 +25,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    puma (3.6.0)
     qiniu (6.5.1)
       json (~> 1.8)
       mime-types (~> 2.4.3)
@@ -77,7 +78,9 @@ DEPENDENCIES
   hiredis
   json
   pry
+  puma
   qiniu
+  rack (< 2.0)
   redis
   rerun
   sass

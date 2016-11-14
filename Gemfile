@@ -1,5 +1,7 @@
 source 'https://gems.ruby-china.org'
 gem 'sinatra'
+gem 'rack', '<2.0'
+gem 'puma'
 gem 'sinatra-flash'
 gem 'json'
 gem 'redis'
