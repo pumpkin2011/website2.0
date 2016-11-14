@@ -1,1 +1,1 @@
-web: sudo bundle exec puma -p 80
+web: bundle exec puma -p 5000
