@@ -1,1 +1,1 @@
-web: bundle exec puma -p 80
+web: sudo bundle exec puma -p 80
