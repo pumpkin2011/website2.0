@@ -1,4 +1,5 @@
 source 'https://gems.ruby-china.org'
+gem 'rake'
 gem 'sinatra'
 gem 'rack', '<2.0'
 gem 'puma'
@@ -13,6 +14,7 @@ gem 'activesupport'
 gem 'bcrypt'
 gem 'task'
 gem 'sass'
+
 group :development do
   gem 'rerun'
   gem 'pry'
