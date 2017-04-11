@@ -14,6 +14,7 @@ gem 'activesupport'
 gem 'bcrypt'
 gem 'task'
 gem 'sass'
+# gem 'sinatra-assetpack', :require => 'sinatra/assetpack'
 
 group :development do
   gem 'rerun'
