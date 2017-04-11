@@ -7,18 +7,35 @@
             a href=paper["pdf_url"] target="_blank" = paper["title"]
           '
         - if paper["pdf_url"]
-            a href="#{paper["pdf_url"]}?attname="
-              | &#8595;
+            a.download href="#{paper["pdf_url"]}?attname="
+              span &#8609;
         p.content = paper["content"]
 
 scss:
   #papers {
     padding: 0 65px;
     margin-top: 75px;
+    .head {
+      display: inline-block;
+    }
     .title {
       display: inline-block;
     }
     .content {
       color: #999;
+      margin-top: 0;
+    }
+    .download {
+      display: inline-block;
+      border: 1px black solid;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      text-align: center;
+      transform: translate(20px, 5px);
+      span {
+        display: inline-block;
+        transform: translate(0, -4px);
+      }
     }
   }
