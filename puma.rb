@@ -4,7 +4,6 @@ threads 1, 6
 app_dir = File.expand_path("../", __FILE__)
 shared_dir = "#{app_dir}"
 
-puts app_dir
 
 bind "unix://#{shared_dir}/tmp/sockets/puma.sock"
 
