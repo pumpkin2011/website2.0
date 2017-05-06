@@ -1,4 +1,4 @@
-form method="post"
+form#homeform method="post"
   #imagewrap.demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--12-col.mdl-grid
     img#upload.homeimg src=@home['image_url'] class="img-responsive img-rounded" alt="Responsive image"
     input#qiniu_field.form-control type="hidden" name="image_url" value=@home['image_url']
@@ -27,6 +27,8 @@ css:
     height: 50px;
     margin-left: 8px;
   }
+  #homeform { width: 100%; }
+  .simditor { width: 100%; }
 
 javascript:
   var editor = new Simditor({

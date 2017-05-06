@@ -19,4 +19,5 @@ gem 'sass'
 group :development do
   gem 'rerun'
   gem 'pry'
+  gem 'mina'
 end
