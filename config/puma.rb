@@ -5,7 +5,7 @@ app_dir = File.expand_path("../", __FILE__)
 shared_dir = "#{app_dir}"
 
 
-bind "unix://#{shared_dir}/tmp/sockets/puma.sock"
+bind "unix://#{shared_dir}/tmp/puma.sock"
 
 # Logging
 stdout_redirect "#{shared_dir}/log/puma.stdout.log", "#{shared_dir}/log/puma.stderr.log", true
