@@ -36,7 +36,7 @@ before do
   name = request.path.slice(/members|papers|interests/)
   set_data(name) if name
 
-  env["rack.errors"] =  error_logger
+  env['rack.errors'] = '~/app.error.log'
 end
 
 # qiniu uptoken
