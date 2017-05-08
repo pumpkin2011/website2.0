@@ -29,6 +29,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    puma (3.6.0)
     qiniu (6.5.1)
       json (~> 1.8)
       mime-types (~> 2.4.3)
@@ -83,6 +84,7 @@ DEPENDENCIES
   json
   mina
   pry
+  puma
   qiniu
   rack (< 2.0)
   rake
