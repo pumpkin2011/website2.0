@@ -14,7 +14,10 @@ if development?
   require './env.rb' if File.exists?('env.rb')
 end
 
-enable :sessions
+# enable :sessions
+use Rack::Session::Cookie, :key => 'rack.session',
+                           :path => '/',
+                           :secret => ENV['qiniu_access_key']
 # disable :protection
 
 before do

@@ -6,8 +6,4 @@ require './app.rb'
 # set :show_exceptions, :after_handler
 # disable :run
 
-use Rack::Session::Cookie,
-:domain=>'0.0.0.0',
-:path => '/'
-
 run Sinatra::Application
