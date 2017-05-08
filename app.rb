@@ -1,6 +1,5 @@
-require 'rubygems'
-require 'bundler/setup'
 require 'sinatra'
+require 'bundler/setup'
 require 'sinatra/flash'
 require 'slim'
 require 'hiredis'
@@ -10,22 +9,13 @@ require 'json'
 require 'active_support/inflector'
 require 'bcrypt'
 require 'sass'
-require 'logger'
 if development?
   require 'pry'
   require './env.rb' if File.exists?('env.rb')
 end
 
 enable :sessions
-
-::Logger.class_eval { alias :write :'<<' }
-access_log = ::File.join(::File.dirname(::File.expand_path(__FILE__)),'log','access.log')
-access_logger = ::Logger.new(access_log)
-error_logger = ::File.new(::File.join(::File.dirname(::File.expand_path(__FILE__)),'log','error.log'),"a+")
-error_logger.sync = true
-configure do
-  use ::Rack::CommonLogger, access_logger
-end
+# disable :protection
 
 before do
   setup_redis
@@ -35,8 +25,6 @@ before do
   # set @members or @papers
   name = request.path.slice(/members|papers|interests/)
   set_data(name) if name
-
-  env['rack.errors'] = '~/app.error.log'
 end
 
 # qiniu uptoken
@@ -56,10 +44,12 @@ post '/login' do
   if admin['username'] == params[:username] &&
      admin['password'] == BCrypt::Engine.hash_secret(params[:password], admin['salt'])
     session[:admin] = params[:username]
-    redirect('/admin/home')
+    # redirect('/admin/home')
+    status, headers, body = call env.merge("PATH_INFO" => '/admin/home')
+  else
+    flash[:error] = "Wrong Username Or Password"
+    # redirect('/login')
   end
-  flash[:error] = "Wrong Username Or Password"
-  redirect('/login')
 end
 
 get '/logout' do
@@ -267,4 +257,9 @@ def delete_record(name, id)
   $redis.hdel(plural_name, "#{name}:#{id}")
   $redis.zrem("#{name}:ids", id)
   redirect("/admin/#{plural_name}")
+end
+
+
+not_found do
+  'This is nowhere to be found.'
 end
