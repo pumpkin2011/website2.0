@@ -15,6 +15,8 @@ if development?
 end
 
 # enable :sessions
+# post will clear the sessions
+# this is the solution
 use Rack::Session::Cookie, :key => 'rack.session',
                            :path => '/',
                            :secret => ENV['qiniu_access_key']

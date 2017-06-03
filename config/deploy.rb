@@ -10,9 +10,9 @@ require 'mina/rbenv'  # for rbenv support. (https://rbenv.org)
 #   repository   - Git repo to clone from. (needed by mina/git)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
-set :user, 'jude'          # Username in the server to SSH to.
+set :user, 'jude2'          # Username in the server to SSH to.
 set :application_name, 'website2'
-set :domain, '112.74.218.147'
+set :domain, '35.185.151.180'
 set :deploy_to, "/home/#{fetch(:user)}/www/website2"
 set :repository, 'git@github.com:pumpkin2011/website2.0.git'
 set :branch, 'master'
