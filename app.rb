@@ -1,21 +1,4 @@
-require 'sinatra'
-require 'bundler/setup'
-require 'sinatra/flash'
-require 'slim'
-require 'hiredis'
-require 'redis'
-require 'qiniu'
-require 'json'
-require 'active_support/inflector'
-require 'bcrypt'
-require 'sass'
-require_relative 'helper/crud'
-
-if development?
-  require 'pry'
-  require './env.rb' if File.exists?('env.rb')
-end
-
+include Crud
 # enable :sessions
 # post will clear the sessions
 # this is the solution
@@ -228,7 +211,6 @@ end
 def auth(param)
   admin = $redis.getall()
 end
-
 
 not_found do
   'This is nowhere to be found.'

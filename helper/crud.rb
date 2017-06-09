@@ -1,4 +1,4 @@
-# module Crud
+module Crud
   # create or update a record
   def create_or_update_record(name, arr)
     plural_name = name.pluralize
@@ -35,4 +35,4 @@
     values = $redis.hgetall(name).values.map!{|item| eval item }.sort_by { |a| ids.index(a['id'].to_s) }
     instance_variable_set(instance_name, values)
   end
-# end
+end
