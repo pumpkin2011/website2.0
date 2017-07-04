@@ -34,8 +34,8 @@ post '/login' do
   if admin['username'] == params[:username] &&
      admin['password'] == BCrypt::Engine.hash_secret(params[:password], admin['salt'])
     session[:admin] = params[:username]
-    # redirect('/admin/home')
-    status, headers, body = call env.merge("PATH_INFO" => '/admin/home')
+    redirect('/admin/home')
+    # status, headers, body = call env.merge("PATH_INFO" => '/admin/home')
   else
     flash[:error] = "Wrong Username Or Password"
     # redirect('/login')
