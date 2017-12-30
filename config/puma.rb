@@ -5,7 +5,9 @@ app_dir = File.expand_path("../..", __FILE__)
 shared_dir = "#{app_dir}"
 
 
-bind "unix://#{shared_dir}/tmp/puma.sock"
+# bind "unix://#{shared_dir}/tmp/puma.sock"
+bind "tcp://0.0.0.0:3000"
+
 
 # Logging
 stdout_redirect "#{shared_dir}/log/puma.stdout.log", "#{shared_dir}/log/puma.stderr.log", true
