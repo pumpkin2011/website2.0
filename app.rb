@@ -194,7 +194,7 @@ private
 
 def setup_redis
   # uri = URI.parse('redis://127.0.0.1:6379') #10000
-  $redis = Redis.new(:host => 'localhost', :port => 6379, driver: :hiredis) unless $redis
+  $redis = Redis.new(:host => 'redis', :port => 6379, driver: :hiredis) unless $redis
 end
 
 def setup_qiniu

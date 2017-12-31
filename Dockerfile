@@ -1,6 +1,8 @@
 FROM ruby:2.3.1
 ENV PROJECT_DIR=/app
 WORKDIR $PROJECT_DIR
-RUN git clone git@github.com:zhenhuanlee/website2.0.git \
- && bundle install \
-CMD ['RAKE_ENV=production', 'puma', '-C', 'config/puma.rb']
+ADD Gemfile .
+ADD Gemfile.lock .
+RUN bundle install
+ADD . .
+CMD RACK_ENV=production bundle exec puma -C config/puma.rb
